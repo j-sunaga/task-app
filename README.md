@@ -1,24 +1,55 @@
-# README
+#Readme
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Task-App
 
-Things you may want to cover:
+Task-Appはタスク管理アプリです。
+・タスクの登録・編集・削除・更新機能
+・タスクに対する期限・優先順位の設定
+・タスクのステータス管理
 
-* Ruby version
+## Dependency
+Ruby:2.6.3
 
-* System dependencies
+Rails:5.2.3
 
-* Configuration
+DB : PostgreSQL
 
-* Database creation
+### テーブル設計
 
-* Database initialization
+#### users
+|culumn  |type  |
+|---|---|
+|id  |integer  |
+|name |string  |
+|email |string  |
 
-* How to run the test suite
+#### tasks
+|culumn  |type  |
+|---|---|
+|id  |integer  |
+|user_id  |integer  |
+|task_name |string  |
+|detail |string  |
+|deadline  |date |
+|status  |string  |
+|priority  |string  |
+|status  |string  |
 
-* Services (job queues, cache servers, search engines, etc.)
+#### labels
+|culumn  |type  |
+|---|---|
+|id  |integer  |
+|label |string  |
+|friend_id |integer  |
 
-* Deployment instructions
+#### task_labels
+|culumn  |type  |
+|---|---|
+|id  |integer  |
+|task_id |integer  |
+|label_id |integer  |
 
-* ...
+
+
+
+
