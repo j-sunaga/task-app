@@ -19,8 +19,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       it 'データが保存される' do
       # new_task_pathにvisitする（タスク登録ページに遷移する）
       # 1.ここにnew_task_pathにvisitする処理を書く
-      visit new_task_path 
-      
+      visit new_task_path
+
       # 「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄に
       # タスクのタイトルと内容をそれぞれfill_in（入力）する
       # 2.ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
@@ -46,10 +46,9 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移する' do
-            # タスク一覧ページに遷移
-        visit tasks_path
-        task = Task.find(2)
-        click_link 'Show', href: task_path(task)
+        #テスト用のタスク作成
+        task = FactoryBot.create(:task, task_name: 'task')
+        visit tasks_path(task)
         expect(page).to have_content 'task'
        end
      end
