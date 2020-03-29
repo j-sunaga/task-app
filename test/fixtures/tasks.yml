@@ -3,7 +3,7 @@
 one:
   name: MyString
   detail: MyString
-  deadline: Random.rand(Date.parse("2020/01/01") .. Date.parse("2020/03/30"))
+  deadline: 1.month.ago
   status: MyString
   priority: MyString
   status: MyString
@@ -12,7 +12,7 @@ one:
 two:
   name: MyString
   detail: MyString
-  deadline: Random.rand(Date.parse("2020/01/01") .. Date.parse("2020/03/30"))
+  deadline: 1.month.ago
   status: MyString
   priority: MyString
   status: MyString
