@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'タスク管理機能', type: :system do
+
+  let(:task) {create(:task)}
+
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示される' do
-       # テストで使用するためのタスクを作成
        task = create(:task)
        # タスク一覧ページに遷移
        visit tasks_path
@@ -47,8 +49,6 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移する' do
-        #テスト用のタスク作成
-        task = create(:task)
         visit tasks_path(task)
         expect(page).to have_content 'test_name'
        end
