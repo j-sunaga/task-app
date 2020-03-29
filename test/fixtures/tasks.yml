@@ -4,16 +4,14 @@ one:
   name: MyString
   detail: MyString
   deadline: 1.month.ago
-  status: MyString
-  priority: MyString
-  status: MyString
+  status: 0
+  priority: 0
   user: one
 
 two:
   name: MyString
   detail: MyString
   deadline: 1.month.ago
-  status: MyString
-  priority: MyString
-  status: MyString
+  status: 0
+  priority: 0
   user: two

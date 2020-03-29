@@ -4,7 +4,7 @@ FactoryBot.define do
     name { 'test_name' }
     detail { 'test_detail' }
     deadline { 1.month.ago }
-    status { 'test_status' }
-    priority { 'test_priority' }
+    status { 0 }
+    priority { 0 }
   end
 end
