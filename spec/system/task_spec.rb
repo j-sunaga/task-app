@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
