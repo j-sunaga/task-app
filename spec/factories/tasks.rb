@@ -1,10 +1,21 @@
+# 「FactoryBotを使用します」という記述
 FactoryBot.define do
+  # 作成するテストデータの名前を「task」とします
+  # （実際に存在するクラス名と一致するテストデータの名前をつければ、そのクラスのテストデータを自動で作成します）
   factory :task do
-    # 下記の内容は実際に作成するカラム名に合わせて変更してください
-    name { 'test_title' }
-    detail { 'test_detail' }
+    name { 'Factory1' }
+    detail { 'Factory1_detail' }
     deadline { Date.today }
-    status { 'test_status' }
-    priority { 'test_priority' }
+    status { 'Factory1_status' }
+    priority { 'Factory1_priority' }
+  end
+  # 作成するテストデータの名前を「second_task」とします
+  # （存在しないクラス名の名前をつける場合、オプションで「このクラスのテストデータにしてください」と指定します）
+  factory :second_task, class: Task do
+    name { 'Factory2' }
+    detail { 'Factory2_detail' }
+    deadline { Date.today }
+    status { 'Factory2_status' }
+    priority { 'Factory2_priority' }
   end
 end
