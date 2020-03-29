@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+      user: ユーザー
+    attributes:
+      task:
+        name: タスク名
+        detail: タスク詳細
+        deadline: 終了期限
+        status: 状態
+        priority: 優先順位
+      user:
+        name: ユーザ名
+        email: メールアドレス
