@@ -5,12 +5,12 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示される' do
        # テストで使用するためのタスクを作成
-       task = create(:task, name: 'task')
+       task = create(:task)
        # タスク一覧ページに遷移
        visit tasks_path
        # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
        # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
-       expect(page).to have_content 'task'
+       expect(page).to have_content 'test_name'
        # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
@@ -48,9 +48,9 @@ RSpec.describe 'タスク管理機能', type: :system do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移する' do
         #テスト用のタスク作成
-        task = create(:task, name: 'task')
+        task = create(:task)
         visit tasks_path(task)
-        expect(page).to have_content 'task'
+        expect(page).to have_content 'test_name'
        end
      end
   end
