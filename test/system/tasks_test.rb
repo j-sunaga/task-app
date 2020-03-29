@@ -18,7 +18,7 @@ class TasksTest < ApplicationSystemTestCase
     fill_in "Detail", with: @task.detail
     fill_in "Priority", with: @task.priority
     fill_in "Status", with: @task.status
-    fill_in "Task name", with: @task.task_name
+    fill_in "Task name", with: @task.name
     fill_in "User", with: @task.user_id
     click_on "Create Task"
 
@@ -34,7 +34,7 @@ class TasksTest < ApplicationSystemTestCase
     fill_in "Detail", with: @task.detail
     fill_in "Priority", with: @task.priority
     fill_in "Status", with: @task.status
-    fill_in "Task name", with: @task.task_name
+    fill_in "Task name", with: @task.name
     fill_in "User", with: @task.user_id
     click_on "Update Task"
 

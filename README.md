@@ -28,7 +28,7 @@ DB : PostgreSQL
 |---|---|
 |id  |integer  |
 |user_id  |integer  |
-|task_name |string  |
+|name |string  |
 |detail |string  |
 |deadline  |date |
 |status  |string  |
@@ -48,8 +48,3 @@ DB : PostgreSQL
 |id  |integer  |
 |task_id |integer  |
 |label_id |integer  |
-
-
-
-
-

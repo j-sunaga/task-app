@@ -4,7 +4,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示される' do
        # テストで使用するためのタスクを作成
-       task = FactoryBot.create(:task, task_name: 'task')
+       task = FactoryBot.create(:task, name: 'task')
        # タスク一覧ページに遷移
        visit tasks_path
        # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
@@ -24,7 +24,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       # 「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄に
       # タスクのタイトルと内容をそれぞれfill_in（入力）する
       # 2.ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
-      fill_in "task[task_name]", with: "Example_Task"
+      fill_in "task[name]", with: "Example_Task"
       # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
       fill_in "task[detail]", with: "Example_Detail"
       select '2020', from: "task[deadline(1i)]"
@@ -47,7 +47,7 @@ RSpec.describe 'タスク管理機能', type: :system do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移する' do
         #テスト用のタスク作成
-        task = FactoryBot.create(:task, task_name: 'task')
+        task = FactoryBot.create(:task, name: 'task')
         visit tasks_path(task)
         expect(page).to have_content 'task'
        end

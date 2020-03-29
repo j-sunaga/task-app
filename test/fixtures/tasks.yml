@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  task_name: MyString
+  name: MyString
   detail: MyString
   deadline: 2020-03-21
   status: MyString
@@ -10,7 +10,7 @@ one:
   user: one
 
 two:
-  task_name: MyString
+  name: MyString
   detail: MyString
   deadline: 2020-03-21
   status: MyString
