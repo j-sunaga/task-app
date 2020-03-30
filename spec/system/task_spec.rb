@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe 'タスク管理機能', type: :system do
   before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
@@ -44,8 +45,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       select '2020', from: "task[deadline(1i)]"
       select '3',from: "task[deadline(2i)]"
       select '25',from: "task[deadline(3i)]"
-      fill_in "task[status]", with: "Example_Status"
-      fill_in "task[priority]", with: "Example_Priority"
+      select 'uncompleted',from: "task[status]"
+      select 'low',from: "task[priority]"
 
       # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
       # 4.「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く

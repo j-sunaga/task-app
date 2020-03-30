@@ -5,17 +5,17 @@ FactoryBot.define do
   factory :task do
     name { 'Factory1' }
     detail { 'Factory1_detail' }
-    deadline { Date.today }
-    status { 'Factory1_status' }
-    priority { 'Factory1_priority' }
+    deadline { 1.month.ago }
+    status { 0 }
+    priority { 0 }
   end
   # 作成するテストデータの名前を「second_task」とします
   # （存在しないクラス名の名前をつける場合、オプションで「このクラスのテストデータにしてください」と指定します）
   factory :second_task, class: Task do
     name { 'Factory2' }
     detail { 'Factory2_detail' }
-    deadline { Date.today }
-    status { 'Factory2_status' }
-    priority { 'Factory2_priority' }
+    deadline { 1.month.ago }
+    status { 0 }
+    priority { 0 }
   end
 end
