@@ -48,3 +48,36 @@ DB : PostgreSQL
 |id  |integer  |
 |task_id |integer  |
 |label_id |integer  |
+
+
+### HerokuへのDeploy方法
+
+#### Herokuのインストール
+
+``` bash:title
+brew tap heroku/brew && brew install heroku
+```
+
+#### Herokuへのログイン
+*事前にHeroku上でアカウントを作成しておく
+
+```bash
+heroku login
+```
+
+#### Herokuへのアップロード
+
+```
+git push heroku branch_step2
+```
+
+#### Heroku上でテーブル作成
+
+```
+heroku run rails db:migrate
+```
+
+#### Herokuへアクセス
+
+Heroku configで表示されるURLにアクセスする
+https://表示されるURL.herokuapp.com/
