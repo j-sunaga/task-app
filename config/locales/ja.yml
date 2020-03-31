@@ -204,3 +204,14 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
+  enums:
+    task:
+      status:
+        '---': "---"
+        uncompleted: "未完了"
+        completed: "完了"
+      priority:
+        '---': "---"
+        low: "低"
+        middle: "中"
+        high: "高"
