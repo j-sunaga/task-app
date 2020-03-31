@@ -45,8 +45,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       select '2020', from: "task[deadline(1i)]"
       select '3',from: "task[deadline(2i)]"
       select '25',from: "task[deadline(3i)]"
-      select 'uncompleted',from: "task[status]"
-      select 'low',from: "task[priority]"
+      select '未完了',from: "task[status]"
+      select '低',from: "task[priority]"
 
       # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
       # 4.「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
