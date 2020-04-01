@@ -6,8 +6,8 @@ FactoryBot.define do
     name { 'Factory1' }
     detail { 'Factory1_detail' }
     deadline { 1.month.ago }
-    status { 0 }
-    priority { 0 }
+    status { 'waiting' }
+    priority { 'low' }
   end
   # 作成するテストデータの名前を「second_task」とします
   # （存在しないクラス名の名前をつける場合、オプションで「このクラスのテストデータにしてください」と指定します）
@@ -15,7 +15,7 @@ FactoryBot.define do
     name { 'Factory2' }
     detail { 'Factory2_detail' }
     deadline { 1.month.ago }
-    status { 0 }
-    priority { 0 }
+    status { 'waiting' }
+    priority { 'low' }
   end
 end

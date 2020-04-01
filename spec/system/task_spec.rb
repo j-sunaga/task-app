@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
   before do
     # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
-    @task=FactoryBot.create(:task)
-    @task2=FactoryBot.create(:second_task)
+    @task=create(:task)
+    @task2=create(:second_task)
   end
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
@@ -19,7 +19,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいる' do
-        new_task = FactoryBot.create(:task, name: 'new_task')
+        new_task = create(:task, name: 'new_task')
         visit tasks_path
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'new_task'
@@ -28,8 +28,8 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '終了期限でソートをクリックした場合' do
       it 'タスクが終了日時のソートで並んでいる' do
-        new_task = FactoryBot.create(:task, name: 'new_task',deadline: Date.today+2)
-        old_task = FactoryBot.create(:task, name: 'old_task',deadline: Date.today+1)
+        new_task = create(:task, name: 'new_task',deadline: Date.today+2)
+        old_task = create(:task, name: 'old_task',deadline: Date.today+1)
         visit tasks_path
         click_link '終了期限でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
@@ -56,7 +56,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       select '2020', from: "task[deadline(1i)]"
       select '3',from: "task[deadline(2i)]"
       select '25',from: "task[deadline(3i)]"
-      select '未完了',from: "task[status]"
+      select '未着手',from: "task[status]"
       select '低',from: "task[priority]"
 
       # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
