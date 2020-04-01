@@ -26,6 +26,17 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[1]).to have_content 'Factory2'
       end
     end
+    context '終了期限でソートをクリックした場合' do
+      it 'タスクが終了日時のソートで並んでいる' do
+        new_task = FactoryBot.create(:task, name: 'new_task',deadline: Date.today+2)
+        old_task = FactoryBot.create(:task, name: 'old_task',deadline: Date.today+1)
+        visit tasks_path
+        click_link '終了期限でソートする'
+        task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+        expect(task_list[0]).to have_content 'new_task'
+        expect(task_list[1]).to have_content 'old_task'
+      end
+    end
 
 
   end
