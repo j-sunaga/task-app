@@ -1,7 +1,7 @@
 <%= form_with(model: task, local: true) do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+      <h2><%= pluralize(task.errors.count, "エラー") %> タスクの保存に失敗しました:</h2>
 
       <ul>
       <% task.errors.full_messages.each do |message| %>
@@ -28,12 +28,12 @@
 
   <div class="field">
     <%= form.label :status %>
-    <%= form.select :status, Task.statuses.keys.to_a, {} %>
+    <%= form.select :status, Task.statuses.keys.map {|k| [I18n.t("enums.task.status.#{k}"), k]} %>
   </div>
 
   <div class="field">
     <%= form.label :priority %>
-    <%= form.select :priority, Task.priorities.keys.to_a, {} %>
+    <%= form.select :priority, Task.priorities.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]} %>
   </div>
 
   <div class="actions">
