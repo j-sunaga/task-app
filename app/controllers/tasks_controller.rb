@@ -5,20 +5,20 @@ class TasksController < ApplicationController
 
     if params[:search].present? then
       if params[:name].present? && params[:status].present? then
-        @tasks = Task.name_like(params[:name]).status(params[:status])
+        @tasks = Task.page(params[:page]).name_like(params[:name]).status(params[:status])
       elsif params[:name].blank? && params[:status].present? then
-        @tasks = Task.status(params[:status])
+        @tasks = Task.page(params[:page]).status(params[:status])
       elsif params[:name].present? && params[:status].blank? then
-        @tasks = Task.name_like(params[:name])
+        @tasks = Task.page(params[:page]).name_like(params[:name])
       else
-        @tasks = Task.all.recent
+        @tasks = Task.all.page(params[:page]).recent
       end
     elsif params[:sort_expired] then
-      @tasks = Task.all.deadline
+      @tasks = Task.all.page(params[:page]).deadline
     elsif params[:sort_priority] then
-      @tasks = Task.all.priority
+      @tasks = Task.all.page(params[:page]).priority
     else
-      @tasks = Task.all.recent
+      @tasks = Task.all.page(params[:page]).recent
     end
 
   end
