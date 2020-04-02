@@ -15,6 +15,8 @@ class TasksController < ApplicationController
       end
     elsif params[:sort_expired] then
       @tasks = Task.all.deadline
+    elsif params[:sort_priority] then
+      @tasks = Task.all.priority
     else
       @tasks = Task.all.recent
     end
