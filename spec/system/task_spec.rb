@@ -37,6 +37,17 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[1]).to have_content 'old_task'
       end
     end
+    context '優先順位でソートをクリックした場合' do
+      it 'タスクが優先順位の高いソートで並んでいる' do
+        high_task = create(:task, name: 'high_task',deadline: Date.today,priority: 'high')
+        middle_task = create(:task, name: 'middle_task',deadline: Date.today,priority: 'middle')
+        visit tasks_path
+        click_link '優先順位でソートする'
+        task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+        expect(task_list[0]).to have_content 'high_task'
+        expect(task_list[1]).to have_content 'middle_task'
+      end
+    end
     context '検索をした場合' do
       before do
         create(:task, name: "search_title1")
