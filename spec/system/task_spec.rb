@@ -37,6 +37,21 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[1]).to have_content 'old_task'
       end
     end
+    context '検索をした場合' do
+      before do
+        create(:task, name: "search_title1")
+        create(:second_task, name: "search_title2")
+      end
+      it "タイトルで検索できる" do
+        visit tasks_path
+        # タスクの検索欄に検索ワードを入力する (例: task)
+        fill_in "name", with: "search_title"
+        # 検索ボタンを押す
+        click_on 'commit'
+        expect(page).to have_content 'search_title1'
+        expect(page).to have_content 'search_title2'
+      end
+    end
 
 
   end
