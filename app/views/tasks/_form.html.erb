@@ -2,41 +2,60 @@
   <% if task.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(task.errors.count, "エラー") %> タスクの保存に失敗しました:</h2>
-
       <ul>
-      <% task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <p><label>タスク名</label></p>
+      <input type="text" class="form-control input-form" name="task[name]" value="<%=@task.name%>">
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :detail %>
-    <%= form.text_field :detail %>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <p><label>タスク詳細</label></p>
+      <textarea class="form-control input-form" name="task[detail]" rows="5"><%=@task.detail%></textarea>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :deadline %>
-    <%= form.date_select :deadline %>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label>終了期限</label>
+      <input type="date" class="form-control input-form" name="task[deadline]">
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, Task.statuses.keys.map {|k| [I18n.t("enums.task.status.#{k}"), k]} %>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <p><label>ステータス</label></p>
+      <select class="form-control input-form" name="task[status]">
+        <option value="waiting">未着手</option>
+        <option value="working">着手中</option>
+        <option value="completed">完了</option>
+      </select>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :priority %>
-    <%= form.select :priority, Task.priorities.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]} %>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <p><label>優先順位</label></p>
+      <select class="form-control input-form" name="task[priority]">
+        <option value="low">低</option>
+        <option value="middle">中</option>
+        <option value="high">高</option>
+      </select>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <button type="submit" class="btn btn-primary" name="commit">登録</button>
+    </div>
   </div>
 <% end %>

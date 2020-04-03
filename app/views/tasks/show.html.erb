@@ -1,29 +1,43 @@
-<p id="notice"><%= notice %></p>
+<h4>タスク詳細</h4>
 
-<p>
-  <strong>タスク名:</strong>
-  <%= @task.name %>
-</p>
+<div class="row">
+  <div class="form-group col-md-6">
+    <label>タスク</label>
+      <input type="text" readonly class="form-control show-form" value="<%=@task.name%>">
+  </div>
+</div>
 
-<p>
-  <strong>タスク詳細:</strong>
-  <%= @task.detail %>
-</p>
+<div class="row">
+  <div class="form-group col-md-6">
+    <label>タスク詳細</label>
+    <textarea readonly class="form-control show-form" name="task[detail]" rows="5"><%=@task.detail%></textarea>
+  </div>
+</div>
 
-<p>
-  <strong>終了期限:</strong>
-  <%= @task.deadline %>
-</p>
+<div class="row">
+  <div class="form-group col-md-6">
+    <label>終了期限</label>
+    <input type="date" readonly class="form-control show-form" value="<%=@task.deadline%>">
+  </div>
+</div>
 
-<p>
-  <strong>ステータス:</strong>
-  <%= @task.status_i18n %>
-</p>
+<div class="row">
+  <div class="form-group col-md-6">
+    <label>ステータス</label>
+    <input type="multiple" readonly class="form-control show-form" value="<%=@task.status_i18n%>">
+  </div>
+</div>
 
-<p>
-  <strong>優先順位:</strong>
-  <%= @task.priority_i18n %>
-</p>
+<div class="row">
+  <div class="form-group col-md-6">
+    <label>優先順位</label>
+    <input type="multiple" readonly class="form-control show-form" value="<%=@task.priority_i18n%>">
+  </div>
+</div>
 
-<%= link_to '編集', edit_task_path(@task) %> |
-<%= link_to '戻る', tasks_path %>
+<div class="row">
+  <div class="form-group col-md-6">
+    <%= link_to '編集', edit_task_path(@task) %>
+    <%= link_to '戻る', tasks_path %>
+  </div>
+</div>
