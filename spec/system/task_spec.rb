@@ -33,6 +33,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         click_link '終了期限でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+        sleep 5
         expect(task_list[0]).to have_content 'new_task'
         expect(task_list[1]).to have_content 'old_task'
       end
@@ -44,8 +45,10 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         click_link '優先順位でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+        sleep 5
         expect(task_list[0]).to have_content 'high_task'
         expect(task_list[1]).to have_content 'middle_task'
+
       end
     end
     context '検索をした場合' do
@@ -79,9 +82,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       fill_in "task[name]", with: "Example_Task"
       # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
       fill_in "task[detail]", with: "Example_Detail"
-      select '2020', from: "task[deadline(1i)]"
-      select '3',from: "task[deadline(2i)]"
-      select '25',from: "task[deadline(3i)]"
+      fill_in "task[deadline]", with: 1.month.ago
       select '未着手',from: "task[status]"
       select '低',from: "task[priority]"
 
@@ -91,7 +92,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
       # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
       # 5.タスク詳細ページに、テストコードで作成したはずのデータ（記述）がhave_contentされているか（含まれているか）を確認（期待）するコードを書く
-      expect(page).to have_content 'Example_Task'
+      expect(page).to have_content 'Example_Detail'
       end
     end
   end
