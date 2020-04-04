@@ -13,6 +13,6 @@ class Task < ApplicationRecord
   scope :status, -> (query) { where(status: "#{query}") }
   scope :deadline, -> { order(deadline: :desc) }
   scope :priority, -> { order(priority: :desc) }
-  scope :recent, -> { order(created_at: :desc) }
+  scope :recent, -> { order(:created_at) }
 
 end
