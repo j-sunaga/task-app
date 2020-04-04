@@ -19,33 +19,31 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいる' do
-        new_task = create(:task, name: 'new_task')
+        new_task = create(:task, name: 'create_new_task',detail: 'create_new_task')
         visit tasks_path
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'new_task'
+        expect(task_list[0]).to have_content 'create_new_task'
         expect(task_list[1]).to have_content 'Factory2'
       end
     end
     context '終了期限でソートをクリックした場合' do
       it 'タスクが終了日時のソートで並んでいる' do
-        new_task = create(:task, name: 'new_task',deadline: Date.today+2)
-        old_task = create(:task, name: 'old_task',deadline: Date.today+1)
+        new_task = create(:task, name: 'new_task',detail: 'new_task',deadline: 2.month.ago)
+        old_task = create(:task, name: 'old_task',detail: 'old_task',deadline: 3.month.ago)
         visit tasks_path
         click_link '終了期限でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        sleep 5
-        expect(task_list[0]).to have_content 'new_task'
-        expect(task_list[1]).to have_content 'old_task'
+        expect(task_list[0]).to have_content 'old_task'
+        expect(task_list[1]).to have_content 'new_task'
       end
     end
     context '優先順位でソートをクリックした場合' do
       it 'タスクが優先順位の高いソートで並んでいる' do
-        high_task = create(:task, name: 'high_task',deadline: Date.today,priority: 'high')
-        middle_task = create(:task, name: 'middle_task',deadline: Date.today,priority: 'middle')
+        high_task = create(:task, name: 'high_task',detail: 'high_task',deadline: Date.today,priority: 'high')
+        middle_task = create(:task, name: 'middle_task',detail: 'middle_task',deadline: Date.today,priority: 'middle')
         visit tasks_path
         click_link '優先順位でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        sleep 5
         expect(task_list[0]).to have_content 'high_task'
         expect(task_list[1]).to have_content 'middle_task'
 
