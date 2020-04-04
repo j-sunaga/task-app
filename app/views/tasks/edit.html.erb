@@ -1,3 +1,5 @@
+<%= render 'layouts/header' %>
+
 <h4>タスク編集</h4>
 
 <%= render 'form', task: @task %>
@@ -7,3 +9,5 @@
     <%= link_to '詳細', @task %> <%= link_to '戻る', tasks_path %>
   </div>
 </div>
+
+<%= render 'layouts/footer' %>
