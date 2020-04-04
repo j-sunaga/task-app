@@ -10,7 +10,6 @@ class Task < ApplicationRecord
   enum priority: {low: 0, middle: 1, high: 2}
 
   scope :name_like,  -> (query) { where('name LIKE ?', "%#{query}%") }
-  scope :status, -> (query) { where(status: "#{query}") }
   scope :deadline, -> { order(:deadline) }
   scope :priority, -> { order(priority: :desc) }
   scope :recent, -> { order(created_at: :desc) }

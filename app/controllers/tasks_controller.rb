@@ -5,9 +5,9 @@ class TasksController < ApplicationController
 
     if params[:search].present? then
       if params[:name].present? && params[:status].present? then
-        @tasks = Task.page(params[:page]).name_like(params[:name]).status(params[:status])
+        @tasks = Task.page(params[:page]).name_like(params[:name]).find_by(status: params[:status])
       elsif params[:name].blank? && params[:status].present? then
-        @tasks = Task.page(params[:page]).status(params[:status])
+        @tasks = Task.page(params[:page]).find_by(status: params[:status])
       elsif params[:name].present? && params[:status].blank? then
         @tasks = Task.page(params[:page]).name_like(params[:name])
       else

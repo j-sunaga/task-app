@@ -49,10 +49,10 @@ RSpec.describe 'タスク管理機能', type: :model do
       expect(Task.name_like('scope1').count).to eq 1
     end
     it "scopeメソッドでステータス検索ができる" do
-      expect(Task.status('completed').count).to eq 1
+      expect(Task.completed.count).to eq 1
     end
     it "scopeメソッドでタイトルとステータスの両方が検索できる" do
-      expect(Task.name_like('scope2').status('completed').count).to eq 1
+      expect(Task.name_like('scope2').completed.count).to eq 1
     end
   end
 end
