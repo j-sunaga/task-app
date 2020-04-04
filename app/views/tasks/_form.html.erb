@@ -34,22 +34,14 @@
   <div class="row">
     <div class="form-group col-md-6">
       <p><label>ステータス</label></p>
-      <select class="form-control input-form" name="task[status]">
-        <option value="waiting">未着手</option>
-        <option value="working">着手中</option>
-        <option value="completed">完了</option>
-      </select>
+      <%= form.select :status, Task.statuses.keys.map {|k| [I18n.t("enums.task.status.#{k}"), k]}, {}, {class: 'form-control input-form'} %>
     </div>
   </div>
 
   <div class="row">
     <div class="form-group col-md-6">
       <p><label>優先順位</label></p>
-      <select class="form-control input-form" name="task[priority]">
-        <option value="low">低</option>
-        <option value="middle">中</option>
-        <option value="high">高</option>
-      </select>
+      <%= form.select :priority, Task.priorities.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]}, {}, {class: 'form-control input-form'} %>
     </div>
   </div>
 
