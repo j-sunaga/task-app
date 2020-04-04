@@ -11,7 +11,7 @@ class Task < ApplicationRecord
 
   scope :name_like,  -> (query) { where('name LIKE ?', "%#{query}%") }
   scope :status, -> (query) { where(status: "#{query}") }
-  scope :deadline, -> { order(deadline: :desc) }
+  scope :deadline, -> { order(:deadline) }
   scope :priority, -> { order(priority: :desc) }
   scope :recent, -> { order(created_at: :desc) }
 
