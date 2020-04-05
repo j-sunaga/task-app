@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'タスク管理機能', type: :system do
   before do
-    # あらかじめタスク一覧のテストで使用するためのタスクを二つ作成する
-    @task=create(:task)
-    @task2=create(:second_task)
+    # あらかじめタスク一覧のテストで使用するためのタスクを作成する
+    create(:task)
   end
+
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示される' do
@@ -13,74 +13,71 @@ RSpec.describe 'タスク管理機能', type: :system do
        visit tasks_path
        # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
        # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
-       expect(page).to have_content 'Factory1'
+       expect(page).to have_content 'task'
        # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
     context '複数のタスクを作成した場合' do
       it 'タスクが作成日時の降順に並んでいる' do
-        new_task = create(:task, name: 'create_new_task',detail: 'create_new_task')
+        create(:task, name: 'new_task',detail: 'new_task')
         visit tasks_path
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'create_new_task'
-        expect(task_list[1]).to have_content 'Factory2'
+        expect(task_list[0]).to have_content 'new_task'
+        expect(task_list[1]).to have_content 'task'
       end
     end
     context '終了期限でソートをクリックした場合' do
       it 'タスクが終了日時のソートで並んでいる' do
-        new_task = create(:task, name: 'new_task',detail: 'new_task',deadline: 2.month.ago)
-        old_task = create(:task, name: 'old_task',detail: 'old_task',deadline: 3.month.ago)
+        create(:task,:old_task)
         visit tasks_path
         click_link '終了期限でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'old_task'
-        expect(task_list[1]).to have_content 'new_task'
+        expect(task_list[1]).to have_content 'task'
       end
     end
     context '優先順位でソートをクリックした場合' do
       it 'タスクが優先順位の高いソートで並んでいる' do
-        high_task = create(:task, name: 'high_task',detail: 'high_task',deadline: Date.today,priority: 'high')
-        middle_task = create(:task, name: 'middle_task',detail: 'middle_task',deadline: Date.today,priority: 'middle')
+        create(:task,:high_priority)
         visit tasks_path
         click_link '優先順位でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'high_task'
-        expect(task_list[1]).to have_content 'middle_task'
+        expect(task_list[1]).to have_content 'task'
       end
     end
     context '検索をした場合' do
       before do
-        create(:task, name: "search_title1",detail:'search_title1',status:'completed')
-        create(:second_task, name: "search_title2",detail:'search_title2',status:'working')
+        create_list(:task, 2, :task_list)
       end
       it "タイトルで検索できる" do
         visit tasks_path
         # タスクの検索欄に検索ワードを入力する (例: task)
-        fill_in "name", with: "search_title"
+        fill_in "name", with: "task_1"
         # 検索ボタンを押す
         click_on 'commit'
-        expect(page).to have_content 'search_title1'
-        expect(page).to have_content 'search_title2'
+        expect(page).to have_content 'task_1'
+        expect(page).to_not have_content 'task_2'
       end
       it "ステータスで検索できる" do
         visit tasks_path
-        select '完了',from: "status"
+        select '着手中',from: "status"
         # 検索ボタンを押す
         click_on 'commit'
-        expect(page).to have_content 'search_title1'
+        expect(page).to have_content 'task_3'
+        expect(page).to have_content 'task_4'
       end
       it "タスク名とステータスで検索できる" do
         visit tasks_path
         # タスクの検索欄に検索ワードを入力する (例: task)
-        fill_in "name", with: "search_title"
+        fill_in "name", with: "5"
         select '着手中',from: "status"
         # 検索ボタンを押す
         click_on 'commit'
-        expect(page).to have_content 'search_title2'
+        expect(page).to have_content 'task_5'
+        expect(page).to_not have_content 'task_6'
       end
     end
-
-
   end
   describe 'タスク登録画面' do
     context '必要項目を入力して、createボタンを押した場合' do
@@ -108,10 +105,11 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
   describe 'タスク詳細画面' do
+    let!(:task){create(:task)}
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移する' do
-        visit tasks_path(@task)
-        expect(page).to have_content 'Factory1'
+        visit tasks_path(task)
+        expect(page).to have_content 'task'
        end
      end
   end
