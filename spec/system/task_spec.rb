@@ -13,7 +13,7 @@ RSpec.describe 'タスク管理機能', type: :system do
        visit tasks_path
        # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
        # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
-       expect(page).to have_content 'task'
+       expect(page).to have_content 'task_1'
        # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
       end
     end
@@ -23,27 +23,27 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'new_task'
-        expect(task_list[1]).to have_content 'task'
+        expect(task_list[1]).to have_content 'task_2'
       end
     end
     context '終了期限でソートをクリックした場合' do
       it 'タスクが終了日時のソートで並んでいる' do
-        create(:task,:old_task)
+        create(:task, :old_task, name:'old_task',detail: 'old_task')
         visit tasks_path
         click_link '終了期限でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'old_task'
-        expect(task_list[1]).to have_content 'task'
+        expect(task_list[1]).to have_content 'task_3'
       end
     end
     context '優先順位でソートをクリックした場合' do
       it 'タスクが優先順位の高いソートで並んでいる' do
-        create(:task,:high_priority)
+        create(:task,:high_priority,name:'high_task',detail: 'high_task')
         visit tasks_path
         click_link '優先順位でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'high_task'
-        expect(task_list[1]).to have_content 'task'
+        expect(task_list[1]).to have_content 'task_4'
       end
     end
     context '検索をした場合' do
