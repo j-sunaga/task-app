@@ -38,7 +38,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '優先順位でソートをクリックした場合' do
       it 'タスクが優先順位の高いソートで並んでいる' do
-        create(:task,:high_priority,name:'high_task',detail: 'high_task')
+        create(:task,name:'high_task',detail: 'high_task',priority: 'high')
         visit tasks_path
         click_link '優先順位でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
@@ -48,34 +48,34 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '検索をした場合' do
       before do
-        create_list(:task, 2, :task_list)
+        create_list(:task, 2, status: 'working')
       end
       it "タイトルで検索できる" do
         visit tasks_path
         # タスクの検索欄に検索ワードを入力する (例: task)
-        fill_in "name", with: "task_1"
+        fill_in "name", with: "task_5"
         # 検索ボタンを押す
         click_on 'commit'
-        expect(page).to have_content 'task_1'
-        expect(page).to_not have_content 'task_2'
+        expect(page).to have_content 'task_5'
+        expect(page).to_not have_content 'task_6'
       end
       it "ステータスで検索できる" do
         visit tasks_path
         select '着手中',from: "status"
         # 検索ボタンを押す
         click_on 'commit'
-        expect(page).to have_content 'task_3'
-        expect(page).to have_content 'task_4'
+        expect(page).to have_content 'task_9'
+        expect(page).to have_content 'task_10'
       end
       it "タスク名とステータスで検索できる" do
         visit tasks_path
         # タスクの検索欄に検索ワードを入力する (例: task)
-        fill_in "name", with: "5"
+        fill_in "name", with: "12"
         select '着手中',from: "status"
         # 検索ボタンを押す
         click_on 'commit'
-        expect(page).to have_content 'task_5'
-        expect(page).to_not have_content 'task_6'
+        expect(page).to have_content 'task_12'
+        expect(page).to_not have_content 'task_13'
       end
     end
   end

@@ -8,7 +8,10 @@ FactoryBot.define do
       "task_#{n}"
     end
 
-    detail { 'task_detail' }
+    sequence :detail do |n|
+      "task_#{n}_detail"
+    end
+
     deadline { 1.month.ago }
     status { :waiting }
     priority { :low }
@@ -16,20 +19,6 @@ FactoryBot.define do
     trait :old_task do
       deadline { 2.month.ago }
       status { :completed }
-    end
-
-    trait :high_priority do
-      priority { :high }
-    end
-
-    trait :task_list do
-      sequence :name do |n|
-        "task_#{n}"
-      end
-      sequence :detail do |n|
-        "task_#{n}_detail"
-      end
-      status { :working }
     end
 
   end
