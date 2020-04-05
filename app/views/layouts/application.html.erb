@@ -9,9 +9,15 @@
   </head>
   <body>
 
+    <%= render 'layouts/header' %>
+
+    <%= render 'layouts/notice_message' %>
+
     <div class="main">
       <%= yield %>
     </div>
+
+    <%= render 'layouts/footer' %>
 
   </body>
 </html>
