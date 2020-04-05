@@ -35,17 +35,20 @@ RSpec.describe 'タスク管理機能', type: :model do
 
   context 'scopeメソッドで検索をした場合' do
     before do
-      Task.create(name: "scope1", detail: "scope1",deadline: 1.month.ago, status: :waiting, priority: :low)
-      Task.create(name: "scope2", detail: "scope2",deadline: 1.month.ago, status: :completed, priority: :low)
+      @task_scope1 = Task.create(name: "scope1", detail: "scope1",deadline: 1.month.ago, status: :waiting, priority: :low)
+      @task_scope2 = Task.create(name: "scope2", detail: "scope2",deadline: 1.month.ago, status: :completed, priority: :low)
     end
     it "scopeメソッドでタイトル検索ができる" do
-      expect(Task.name_like('scope1').count).to eq 1
+      expect(Task.name_like('scope1')).to include(@task_scope1)
+      expect(Task.name_like('scope1')).to_not include(@task_scope2)
     end
     it "scopeメソッドでステータス検索ができる" do
-      expect(Task.completed.count).to eq 1
+      expect(Task.completed).to include(@task_scope2)
+      expect(Task.completed).to_not include(@task_scope1)
     end
     it "scopeメソッドでタイトルとステータスの両方が検索できる" do
-      expect(Task.name_like('scope2').completed.count).to eq 1
+      expect(Task.name_like('scope2').completed).to include (@task_scope2)
+      expect(Task.name_like('scope2').completed).to_not include (@task_scope1)
     end
   end
 end
