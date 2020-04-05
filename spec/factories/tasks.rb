@@ -3,19 +3,35 @@ FactoryBot.define do
   # 作成するテストデータの名前を「task」とします
   # （実際に存在するクラス名と一致するテストデータの名前をつければ、そのクラスのテストデータを自動で作成します）
   factory :task do
-    name { 'Factory1' }
-    detail { 'Factory1_detail' }
+
+    name { 'task' }
+    detail { 'task_detail' }
     deadline { 1.month.ago }
     status { :waiting }
     priority { :low }
-  end
-  # 作成するテストデータの名前を「second_task」とします
-  # （存在しないクラス名の名前をつける場合、オプションで「このクラスのテストデータにしてください」と指定します）
-  factory :second_task, class: Task do
-    name { 'Factory2' }
-    detail { 'Factory2_detail' }
-    deadline { 1.month.ago }
-    status { :waiting }
-    priority { :low }
+
+    trait :old_task do
+      name { 'old_task' }
+      detail { 'old_task_detail' }
+      deadline { 2.month.ago }
+      status { :completed }
+    end
+
+    trait :high_priority do
+      name { 'high_task' }
+      detail { 'high_task_detail' }
+      priority { :high }
+    end
+
+    trait :task_list do
+      sequence :name do |n|
+        "task_#{n}"
+      end
+      sequence :detail do |n|
+        "task_#{n}_detail"
+      end
+      status { :working }
+    end
+
   end
 end
