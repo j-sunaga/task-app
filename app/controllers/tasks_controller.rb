@@ -2,17 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-
     if params[:search].present?
-      if params[:name].present? && params[:status].present?
-        @tasks = Task.page(params[:page]).name_like(params[:name]).where(status: params[:status])
-      elsif params[:name].blank? && params[:status].present?
-        @tasks = Task.page(params[:page]).where(status: params[:status])
-      elsif params[:name].present? && params[:status].blank?
-        @tasks = Task.page(params[:page]).name_like(params[:name])
-      else
-        @tasks = Task.all.page(params[:page]).recent
-      end
+      @tasks = Task.search(params[:name],params[:status],params[:page])
     elsif params[:sort_expired]
       @tasks = Task.all.page(params[:page]).deadline
     elsif params[:sort_priority]
@@ -20,7 +11,6 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all.page(params[:page]).recent
     end
-
   end
 
   def show; end
