@@ -18,8 +18,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
     context '複数のタスクを作成した場合' do
+      let!(:new_task){create(:task, name: 'new_task',detail: 'new_task')}
       it 'タスクが作成日時の降順に並んでいる' do
-        create(:task, name: 'new_task',detail: 'new_task')
         visit tasks_path
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
         expect(task_list[0]).to have_content 'new_task'
@@ -27,8 +27,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
     context '終了期限でソートをクリックした場合' do
+      let!(:old_task){create(:task,:old_task, name:'old_task',detail: 'old_task')}
       it 'タスクが終了日時のソートで並んでいる' do
-        create(:task, :old_task, name:'old_task',detail: 'old_task')
         visit tasks_path
         click_link '終了期限でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
@@ -37,8 +37,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
     context '優先順位でソートをクリックした場合' do
+      let!(:high_task){create(:task,name:'high_task',detail: 'high_task',priority: 'high')}
       it 'タスクが優先順位の高いソートで並んでいる' do
-        create(:task,name:'high_task',detail: 'high_task',priority: 'high')
         visit tasks_path
         click_link '優先順位でソートする'
         task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
