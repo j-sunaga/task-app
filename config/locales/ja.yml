@@ -209,6 +209,8 @@ ja:
       status:
         '---': "---"
         uncompleted: "未完了"
+        waiting: "未着手"
+        working: "着手中"
         completed: "完了"
       priority:
         '---': "---"
