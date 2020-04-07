@@ -16,7 +16,7 @@ FactoryBot.define do
     status { :waiting }
     priority { :low }
 
-    trait :old_task do
+    trait :old do
       deadline { 2.month.ago }
       status { :completed }
     end

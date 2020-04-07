@@ -27,7 +27,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
     context '終了期限でソートをクリックした場合' do
-      let!(:old_task){create(:task,:old_task, name:'old_task',detail: 'old_task')}
+      let!(:old_task){create(:task,:old, name:'old_task',detail: 'old_task')}
       it 'タスクが終了日時のソートで並んでいる' do
         visit tasks_path
         click_link '終了期限でソートする'
