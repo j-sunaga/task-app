@@ -76,6 +76,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
+    database_cleaner (1.8.4)
     debug_inspector (0.0.3)
     diff-lcs (1.3)
     enum_help (0.0.17)
@@ -237,6 +238,7 @@ DEPENDENCIES
   byebug
   capybara
   coffee-rails (~> 4.2)
+  database_cleaner
   enum_help
   factory_bot_rails
   kaminari (~> 0.17.0)
