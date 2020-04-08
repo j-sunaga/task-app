@@ -1,0 +1,25 @@
+<h4>ログイン</h4>
+  <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+    <form>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Email</label>
+          <input type="text" class="form-control" name="session[email]">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>パスワード</label>
+          <input type="password" class="form-control" name="session[password]" id="exampleInputPassword1" placeholder="Password">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-1">
+          <button type="submit" class="btn btn-primary" name="commit">ログイン</button>
+        </div>
+      </div>
+    </form>
+
+    <% end %>
