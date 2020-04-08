@@ -1,14 +1,15 @@
 class UsersController < ApplicationController
 
+  before_action :user_check, only: [:show,:edit,:update]
   before_action :user_find, only: [:show,:edit,:update]
 
   def new
     if current_user.blank?
-     @user = User.new
+      @user = User.new
     else
       flash[:danger] = '既に登録済みです'
       redirect_to tasks_path
-  end
+    end
   end
 
   def create
@@ -21,11 +22,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   #アップデートアクション
   def update
@@ -43,7 +42,14 @@ class UsersController < ApplicationController
   end
 
   def user_find
-    @user= User.find(params[:id])
+    @user= current_user
+  end
+
+  def user_check
+    if session[:user_id] != params[:id].to_i
+      flash[:danger] = '別のユーザ情報は確認できません'
+      redirect_to tasks_path
+    end
   end
 
 end
