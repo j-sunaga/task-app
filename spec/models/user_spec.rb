@@ -31,6 +31,12 @@ RSpec.describe "User管理機能", type: :model do
     expect(user).not_to be_valid
   end
 
+  it "同じemailの場合,バリデーションが通らない" do
+    user1 = create(:user,email:"b"*50+"@test.com")
+    user2 = build(:user,email:"b"*50+"@test.com")
+    expect(user2).not_to be_valid
+  end
+
   it "passwordが6文字未満ならバリデーションが通らない" do
     user = build(:user,password:"a"*5)
     expect(user).not_to be_valid
