@@ -3,7 +3,12 @@ class UsersController < ApplicationController
   before_action :user_find, only: [:show,:edit,:update]
 
   def new
+    if current_user.blank?
      @user = User.new
+    else
+      flash[:danger] = '既に登録済みです'
+      redirect_to tasks_path
+  end
   end
 
   def create
