@@ -12,8 +12,15 @@
 
         <div class="navbar-collapse navbar-right collapse" id="navbarExample1">
           <ul class="nav navbar-nav float-right">
-            <li ><p class="navbar-text"><%= link_to "新規登録", new_task_path %></p></li>
-            <li ><p class="navbar-text"><%= link_to "タスク一覧", tasks_path %></p></li>
+            <% if current_user then %>
+              <p class="navbar-text"><%= link_to "#{current_user.name}", user_path(current_user.id) %></p>
+              <li ><p class="navbar-text"><%= link_to "新規登録", new_task_path %></p></li>
+              <li ><p class="navbar-text"><%= link_to "タスク一覧", tasks_path %></p></li>
+              <li><p class="navbar-text"><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></p></li>
+              <% else %>
+              <li ><p class="navbar-text"><%= link_to "新規登録", new_user_path %></p></li>
+              <li ><p class="navbar-text"><%= link_to "ログイン", new_session_path %></p></li>
+              <% end %>
           </ul>
         </div>
       </div>
