@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 
   #アソシエーション
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 
   #secure password
   has_secure_password
