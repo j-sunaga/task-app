@@ -1,0 +1,46 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <h4> ユーザ一覧 </h4>
+  </div>
+
+  <%= form_with url:'/admin/users', method: :get, local: true do |f| %>
+  <%= f.hidden_field :search, value: 'true' %>
+    <div class="row clearfix">
+      <input type="text" class="form-control keyword-form clearfix" name="name" value="" placeholder="タスク名検索ワード">
+      <select class="form-control keyword-form clearfix" name="status">
+        <option value="" style="display: none;">ステータス検索</option>
+        <option value=""></option>
+        <option value="waiting">未着手</option>
+        <option value="working">着手中</option>
+        <option value="completed">完了</option>
+      </select>
+      <button type="submit" class="btn btn-primary search-btn" name="commit">検索</button>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
+    </div>
+    <div class="col-sm-4">
+      <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>ユーザ名</th>
+        <th>Email</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <%= render 'layouts/user', collection: @users %>
+  </table>
+
+  <%= paginate @users, left: 1, right: 3 %><br>
+
+  <%= link_to 'ユーザの登録', new_user_path %>
+
+</div>

@@ -1,15 +1,13 @@
 class Admin::UsersController < ApplicationController
 
-  before_action :user_check, only: [:show,:edit,:update]
-  before_action :user_find, only: [:show,:edit,:update]
+  before_action :user_find, only: [:show,:edit,:update,:destroy]
+
+  def index
+    @users = User.all.page(params[:page])
+  end
 
   def new
-    if current_user.blank?
-      @user = User.new
-    else
-      flash[:danger] = '既に登録済みです'
-      redirect_to tasks_path
-    end
+    @user = User.new
   end
 
   def create
@@ -29,10 +27,15 @@ class Admin::UsersController < ApplicationController
   #アップデートアクション
   def update
     if @user.update(user_params)
-      redirect_to user_path(@user.id), notice: "会員情報を変更しました。"
+      redirect_to admin_user_path(@user.id), notice: "会員情報を変更しました。"
     else
       render :edit
     end
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to admin_users_path, notice: 'ユーザを削除しました'
   end
 
   private
@@ -42,10 +45,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_find
-    @user= current_user
+    @user= User.find(params[:id])
   end
 
-  def user_check
+  def admin_check
     if session[:user_id] != params[:id].to_i
       flash[:danger] = '別のユーザ情報は確認できません'
       redirect_to tasks_path

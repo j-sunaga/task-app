@@ -1,0 +1,23 @@
+<div class="container">
+  <h4>ユーザ情報</h4>
+  <form>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>ユーザ名</label>
+        <input type="text" readonly class="form-control" name="user[name]" value="<%=@user.name%>">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>Eメール</label>
+        <input type="text" readonly class="form-control" name="user[email]" value="<%=@user.email%>">
+      </div>
+    </div>
+
+    <%= link_to '編集', edit_admin_user_path(@user) %> |
+    <%= link_to '戻る', admin_users_path %>
+
+  </form>
+</div>
