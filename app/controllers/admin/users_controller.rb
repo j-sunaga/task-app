@@ -1,5 +1,7 @@
 class Admin::UsersController < ApplicationController
 
+  before_action :logged_in?
+  before_action :admin_check
   before_action :user_find, only: [:show,:edit,:update,:destroy]
 
   def index
@@ -46,7 +48,7 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name,:email,:password,:password_confirmation)
+    params.require(:user).permit(:name,:email,:admin,:password,:password_confirmation)
   end
 
   def user_find
@@ -54,9 +56,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def admin_check
-    if session[:user_id] != params[:id].to_i
-      flash[:danger] = '別のユーザ情報は確認できません'
-      redirect_to users_path
+    if current_user.admin != true
+      flash[:danger] = '権限がありません'
+      redirect_to tasks_path
     end
   end
 
