@@ -3,7 +3,13 @@ class Admin::UsersController < ApplicationController
   before_action :user_find, only: [:show,:edit,:update,:destroy]
 
   def index
-    @users = User.all.page(params[:page])
+    if params[:name].present?
+      @users = User.page(params[:page]).name_like(params[:name])
+    elsif params[:name_order]
+      @users = User.page(params[:page]).name_order
+    else
+      @users = User.all.page(params[:page])
+    end
   end
 
   def new

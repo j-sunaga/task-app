@@ -12,4 +12,7 @@ class User < ApplicationRecord
   validates :email, presence: true,  uniqueness: true, length: {maximum: 255},format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
   validates :password,presence: true, length: { minimum: 6 }
 
+  scope :name_like,  -> (query) { where('name LIKE ?', "%#{query}%") }
+  scope :name_order, -> { order(name: :asc) }
+
 end

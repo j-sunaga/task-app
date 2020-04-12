@@ -7,24 +7,14 @@
   <%= form_with url:'/admin/users', method: :get, local: true do |f| %>
   <%= f.hidden_field :search, value: 'true' %>
     <div class="row clearfix">
-      <input type="text" class="form-control keyword-form clearfix" name="name" value="" placeholder="タスク名検索ワード">
-      <select class="form-control keyword-form clearfix" name="status">
-        <option value="" style="display: none;">ステータス検索</option>
-        <option value=""></option>
-        <option value="waiting">未着手</option>
-        <option value="working">着手中</option>
-        <option value="completed">完了</option>
-      </select>
+      <input type="text" class="form-control keyword-form clearfix" name="name" value="" placeholder="ユーザ名検索ワード">
       <button type="submit" class="btn btn-primary search-btn" name="commit">検索</button>
     </div>
   <% end %>
 
   <div class="row">
     <div class="col-sm-4">
-      <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
-    </div>
-    <div class="col-sm-4">
-      <%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %>
+      <%= link_to "名前でソートする", admin_users_path(name_order: "true") %>
     </div>
   </div>
 
