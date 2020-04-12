@@ -29,10 +29,7 @@
     <div class="row">
       <div class="form-group col-md-6">
         <label>Admin権限</label>
-        <select class="form-control" name="user[admin]" value="<%=@user.admin%>">
-          <option value=FALSE>一般ユーザ</option>
-          <option value=TRUE>管理者</option>
-        </select>
+         <%= f.select :admin,[["一般ユーザ", false], [ "管理者",true]], {}, {class: 'form-control'} %>
       </div>
     </div>
 
