@@ -36,6 +36,7 @@ class Admin::UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to admin_user_path(@user.id), notice: "会員情報を変更しました。"
     else
+      flash[:danger] = '更新に失敗しました'
       render :edit
     end
   end
