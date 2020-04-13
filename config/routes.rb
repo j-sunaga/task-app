@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
+    resources :tasks, only: [:index]
   end
 
 end
