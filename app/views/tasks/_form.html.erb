@@ -45,6 +45,8 @@
     </div>
   </div>
 
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
   <div class="row">
     <div class="form-group col-md-6">
       <button type="submit" class="btn btn-primary" name="commit">登録</button>
