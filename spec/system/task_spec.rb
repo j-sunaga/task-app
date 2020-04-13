@@ -1,115 +1,119 @@
 require 'rails_helper'
 
 RSpec.describe 'タスク管理機能', type: :system do
-  before do
-    # あらかじめタスク一覧のテストで使用するためのタスクを作成する
-    create(:task)
-  end
+
+  let!(:user){create(:user)}
+  let!(:task){create(:task,user:user)}
 
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示される' do
-       # タスク一覧ページに遷移
-       visit tasks_path
-       # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
-       # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
-       expect(page).to have_content 'task_1'
-       # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
+        #タスク一覧ページに遷移
+        act_as user do
+          visit tasks_path
+          # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
+          # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
+          expect(page).to have_content "#{task.name}"
+          # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
+        end
       end
     end
     context '複数のタスクを作成した場合' do
-      let!(:new_task){create(:task, name: 'new_task',detail: 'new_task')}
+      let!(:new_task){create(:task, name: 'new_task',detail: 'new_task',user:user)}
       it 'タスクが作成日時の降順に並んでいる' do
-        visit tasks_path
-        task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'new_task'
-        expect(task_list[1]).to have_content 'task_2'
+        act_as user do
+          visit tasks_path
+          task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+          expect(task_list[0]).to have_content 'new_task'
+          expect(task_list[1]).to have_content "#{task.name}"
+        end
       end
     end
     context '終了期限でソートをクリックした場合' do
-      let!(:old_task){create(:task,:old, name:'old_task',detail: 'old_task')}
+      let!(:old_task){create(:task,:old, name:'old_task',detail: 'old_task',user:user)}
       it 'タスクが終了日時のソートで並んでいる' do
-        visit tasks_path
-        click_link '終了期限でソートする'
-        task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'old_task'
-        expect(task_list[1]).to have_content 'task_3'
+        act_as user do
+          visit tasks_path
+          click_link '終了期限でソートする'
+          task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+          expect(task_list[0]).to have_content 'old_task'
+          expect(task_list[1]).to have_content "#{task.name}"
+        end
       end
     end
     context '優先順位でソートをクリックした場合' do
-      let!(:high_task){create(:task,name:'high_task',detail: 'high_task',priority: 'high')}
+      let!(:high_task){create(:task,name:'high_task',detail: 'high_task',priority: 'high',user:user)}
       it 'タスクが優先順位の高いソートで並んでいる' do
-        visit tasks_path
-        click_link '優先順位でソートする'
-        task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
-        expect(task_list[0]).to have_content 'high_task'
-        expect(task_list[1]).to have_content 'task_4'
+        act_as user do
+          visit tasks_path
+          click_link '優先順位でソートする'
+          task_list = all('.task_row') # タスク一覧を配列として取得するため、View側でidを振っておく
+          expect(task_list[0]).to have_content 'high_task'
+          expect(task_list[1]).to have_content "#{task.name}"
+        end
       end
     end
     context '検索をした場合' do
-      before do
-        create_list(:task, 2, status: 'working')
-      end
+      let!(:tasks){create_list(:task, 2, status: 'working',user:user)}
       it "タイトルで検索できる" do
-        visit tasks_path
-        # タスクの検索欄に検索ワードを入力する (例: task)
-        fill_in "name", with: "task_5"
-        # 検索ボタンを押す
-        click_on 'commit'
-        expect(page).to have_content 'task_5'
-        expect(page).to_not have_content 'task_6'
+        act_as user do
+          visit tasks_path
+          # タスクの検索欄に検索ワードを入力する (例: task)
+          fill_in "name", with: "#{tasks[0].name}"
+          # 検索ボタンを押す
+          click_on 'commit'
+          expect(page).to have_content "#{tasks[0].name}"
+          expect(page).to_not have_content "#{tasks[1].name}"
+        end
       end
       it "ステータスで検索できる" do
-        visit tasks_path
-        select '着手中',from: "status"
-        # 検索ボタンを押す
-        click_on 'commit'
-        expect(page).to have_content 'task_9'
-        expect(page).to have_content 'task_10'
+        act_as user do
+          visit tasks_path
+          select '着手中',from: "status"
+          # 検索ボタンを押す
+          click_on 'commit'
+          expect(page).to have_content 'task_9'
+          expect(page).to have_content 'task_10'
+        end
       end
       it "タスク名とステータスで検索できる" do
-        visit tasks_path
-        # タスクの検索欄に検索ワードを入力する (例: task)
-        fill_in "name", with: "12"
-        select '着手中',from: "status"
-        # 検索ボタンを押す
-        click_on 'commit'
-        expect(page).to have_content 'task_12'
-        expect(page).to_not have_content 'task_13'
+        act_as user do
+          visit tasks_path
+          # タスクの検索欄に検索ワードを入力する (例: task)
+          fill_in "name", with: "12"
+          select '着手中',from: "status"
+          # 検索ボタンを押す
+          click_on 'commit'
+          expect(page).to have_content 'task_12'
+          expect(page).to_not have_content 'task_13'
+        end
       end
     end
   end
   describe 'タスク登録画面' do
     context '必要項目を入力して、createボタンを押した場合' do
       it 'データが保存される' do
-      # new_task_pathにvisitする（タスク登録ページに遷移する）
-      # 1.ここにnew_task_pathにvisitする処理を書く
-      visit new_task_path
-      # 「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄に
-      # タスクのタイトルと内容をそれぞれfill_in（入力）する
-      # 2.ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
-      fill_in "task[name]", with: "Example_Task"
-      # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
-      fill_in "task[detail]", with: "Example_Detail"
-      fill_in "task[deadline]", with: 1.month.ago
-      select '未着手',from: "task[status]"
-      select '低',from: "task[priority]"
-      # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
-      # 4.「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）する処理を書く
-      click_on 'commit'
-      # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
-      # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
-      # 5.タスク詳細ページに、テストコードで作成したはずのデータ（記述）がhave_contentされているか（含まれているか）を確認（期待）するコードを書く
-      expect(page).to have_content 'Example_Detail'
+        act_as user do
+          visit new_task_path
+          fill_in "task[name]", with: "Example_Task"
+          fill_in "task[detail]", with: "Example_Detail"
+          fill_in "task[deadline]", with: 1.month.ago
+          select '未着手',from: "task[status]"
+          select '低',from: "task[priority]"
+          click_on 'commit'
+          expect(page).to have_content 'Example_Detail'
+        end
       end
     end
   end
   describe 'タスク詳細画面' do
-    let!(:task){create(:task)}
+    let!(:task){create(:task,user:user)}
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移する' do
-        visit tasks_path(task)
-        expect(page).to have_content 'task'
+        act_as user do
+          visit tasks_path(task)
+          expect(page).to have_content 'task'
+        end
        end
      end
   end

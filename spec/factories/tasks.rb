@@ -21,5 +21,7 @@ FactoryBot.define do
       status { :completed }
     end
 
+    user
+
   end
 end
