@@ -27,7 +27,9 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @tasks=@user.tasks.recent
+  end
 
   def edit; end
 

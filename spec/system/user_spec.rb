@@ -128,12 +128,11 @@ RSpec.describe 'ユーザ管理機能', type: :system do
         end
       end
     end
-    context '管理者はユーザのタスク数からタスク詳細画面へ遷移できる' do
+    context '管理者はユーザの詳細画面からユーザが作成したタスクが確認できる' do
       let!(:task){create(:task,user:admin)}
-      it 'ユーザ画面一覧でタスク数をクリックするとタスク詳細が表示される' do
+      it 'ユーザ画面一覧からユーザの詳細画面に飛ぶとタスク詳細が表示される' do
         act_as admin do
-          visit admin_users_path
-          click_link "#{admin.tasks.count}"
+          visit admin_user_path("#{admin.id}")
           expect(page).to have_content "#{task.name}"
         end
       end
