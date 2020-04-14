@@ -118,5 +118,25 @@ RSpec.describe 'ユーザ管理機能', type: :system do
         end
       end
     end
+    context '管理者はユーザのタスク数を一覧画面で確認できる' do
+      let!(:task){create(:task,user:admin)}
+      it 'ユーザ一覧画面でタスク数が表示されている' do
+        act_as admin do
+          visit admin_users_path
+          task_count_list = all('.task_count_row')
+          expect(task_count_list[0]).to have_content "#{admin.tasks.count}"
+        end
+      end
+    end
+    context '管理者はユーザのタスク数からタスク詳細画面へ遷移できる' do
+      let!(:task){create(:task,user:admin)}
+      it 'ユーザ画面一覧でタスク数をクリックするとタスク詳細が表示される' do
+        act_as admin do
+          visit admin_users_path
+          click_link "#{admin.tasks.count}"
+          expect(page).to have_content "#{task.name}"
+        end
+      end
+    end
   end
 end
