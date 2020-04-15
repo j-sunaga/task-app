@@ -15,6 +15,14 @@
         <option value="working">着手中</option>
         <option value="completed">完了</option>
       </select>
+      <select class="form-control keyword-form clearfix" name="label">
+        <option value="" style="display: none;">ラベル検索</option>
+        <option value=""></option>
+        <% current_user.labels.each do |label| %>
+          <option value=<%=label.name%>><%=label.name%></option>
+        <% end %>
+      </select>
+
       <button type="submit" class="btn btn-primary search-btn" name="commit">検索</button>
     </div>
   <% end %>
