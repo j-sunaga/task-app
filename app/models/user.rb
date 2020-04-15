@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   #アソシエーション
   has_many :tasks, dependent: :destroy
+  has_many :labels, dependent: :destroy
 
   #secure password
   has_secure_password
