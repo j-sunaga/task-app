@@ -1,0 +1,50 @@
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "エラー") %> ユーザの登録に失敗しました:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model:user, local: true) do |f| %>
+
+  <form>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>ユーザ名</label>
+        <input type="text" class="form-control" name="user[name]" value="<%=@user.name%>">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>Eメール</label>
+        <input type="text" class="form-control" name="user[email]" value="<%=@user.email%>">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>パスワード</label>
+        <input type="password" class="form-control" name="user[password]" id="exampleInputPassword1" placeholder="Password">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label>パスワード確認</label>
+        <input type="password" class="form-control" name="user[password_confirmation]" id="exampleInputPassword1" placeholder="Password">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-1">
+        <button type="submit" class="btn btn-primary" name="commit">登録</button>
+      </div>
+    </div>
+  </form>
+
+<% end %>

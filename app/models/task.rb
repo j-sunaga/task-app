@@ -14,15 +14,15 @@ class Task < ApplicationRecord
   scope :priority, -> { order(priority: :desc) }
   scope :recent, -> { order(created_at: :desc) }
 
-  def self.search(input_name,input_status,page_number)
+  def self.search(current_user,input_name,input_status,page_number)
       if input_name.present? && input_status.present?
-        Task.page(page_number).name_like(input_name).where(status:input_status)
+        current_user.tasks.page(page_number).name_like(input_name).where(status:input_status)
       elsif input_name.blank? && input_status.present?
-        Task.page(page_number).where(status:input_status)
+        current_user.tasks.page(page_number).where(status:input_status)
       elsif input_name.present? && input_status.blank?
-        Task.page(page_number).name_like(input_name)
+        current_user.tasks.page(page_number).name_like(input_name)
       else
-        Task.all.page(page_number).recent
+        current_user.tasks.all.page(page_number).recent
       end
   end
 

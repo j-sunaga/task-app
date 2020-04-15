@@ -1,15 +1,17 @@
 class TasksController < ApplicationController
+
+  before_action :logged_in?
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
     if params[:search].present?
-      @tasks = Task.search(params[:name],params[:status],params[:page])
+      @tasks = Task.search(current_user,params[:name],params[:status],params[:page])
     elsif params[:sort_expired]
-      @tasks = Task.all.page(params[:page]).deadline
+      @tasks = current_user.tasks.page(params[:page]).deadline
     elsif params[:sort_priority]
-      @tasks = Task.all.page(params[:page]).priority
+      @tasks = current_user.tasks.page(params[:page]).priority
     else
-      @tasks = Task.all.page(params[:page]).recent
+      @tasks = current_user.tasks.page(params[:page]).recent
     end
   end
 
@@ -23,7 +25,6 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-
     if @task.save
       redirect_to @task, notice: 'タスクの登録が完了しました'
     else
@@ -47,7 +48,7 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def task_params
