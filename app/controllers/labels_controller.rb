@@ -17,17 +17,31 @@ class LabelsController < ApplicationController
 
   def create
     @label = Label.new(label_params)
-    if @label.save
-      redirect_to @label, notice: 'ラベルの登録が完了しました'
+    #同じ名前のラベルが存在しなければ保存を許可
+    if current_user.labels.find_by(name:label_params[:name]).blank?
+      if @label.save
+        redirect_to @label, notice: 'ラベルの登録が完了しました'
+      else
+        flash[:danger]='保存に失敗しました'
+        render :new
+      end
     else
+      flash[:danger]='保存に失敗しました。同じ名前のラベルがすでに存在します'
       render :new
     end
   end
 
   def update
-    if @label.update(label_params)
-      redirect_to @label, notice: 'ラベルの更新が完了しました'
+    #同じ名前のラベルが存在しなければ更新を許可
+    if current_user.labels.where.not(id:@label.id).find_by(name:label_params[:name]).blank?
+      if @label.update(label_params)
+        redirect_to @label, notice: 'ラベルの更新が完了しました'
+      else
+        flash[:danger]='更新に失敗しました'
+        render :edit
+      end
     else
+      flash[:danger]='更新に失敗しました。同じ名前のラベルがすでに存在します'
       render :edit
     end
   end
