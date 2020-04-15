@@ -37,6 +37,18 @@
 
 <div class="row">
   <div class="form-group col-md-6">
+    <label>ラベル</label>
+    <div>
+      <% @task.labels.each do |label| %>
+        <label class='badge badge-secondary'><%= label.name %></label>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="form-group col-md-6">
     <%= link_to '編集', edit_task_path(@task) %>
     <%= link_to '戻る', tasks_path %>
   </div>
