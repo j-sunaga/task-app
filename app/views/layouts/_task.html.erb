@@ -8,7 +8,7 @@
           <td><%= task.priority_i18n %></td>
           <td>
           <% task.labels.each do |label| %>
-            <%= label.name %>
+            <span class="label label-default"><%= label.name %></span>
           <% end %>
           </td>
           <td><%= link_to '詳細', task %></td>
