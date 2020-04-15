@@ -1,10 +1,19 @@
-
 #User初期データ
 20.times do |n|
     User.create(
       email: "test_#{n + 1}@test.com",
       name: "test_#{n + 1}",
       password: '123456'
+    )
+  end
+
+#Admin初期データ
+2.times do |n|
+    User.create(
+      email: "admin_#{n + 1}@test.com",
+      name: "admin_#{n + 1}",
+      password: '123456',
+      admin: true
     )
   end
 
