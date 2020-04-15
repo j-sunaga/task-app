@@ -1,0 +1,39 @@
+<%= form_with(model: label, local: true) do |form| %>
+
+  <% if label.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(label.errors.count, "エラー") %> タスクの保存に失敗しました:</h2>
+      <ul>
+        <% label.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <p><label>ラベル名</label></p>
+      <input type="text" class="form-control input-form" name="label[name]" value="<%=@label.name%>">
+    </div>
+  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+    <p><label>タスク名</label></p>
+      <% current_user.tasks.each do |task| %>
+        <%= form.check_box :task_ids, { multiple: true, checked: @label.tasks.find_by(id: task.id).present?, include_hidden: false }, task[:id] %>
+        <label class='badge badge-secondary'><%= task.name %></label>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <button type="submit" class="btn btn-primary" name="commit">登録</button>
+    </div>
+  </div>
+
+<% end %>
