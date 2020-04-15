@@ -18,16 +18,31 @@ class Task < ApplicationRecord
   scope :priority, -> { order(priority: :desc) }
   scope :recent, -> { order(created_at: :desc) }
 
-  def self.search(current_user,input_name,input_status,page_number)
-      if input_name.present? && input_status.present?
-        current_user.tasks.page(page_number).name_like(input_name).where(status:input_status)
-      elsif input_name.blank? && input_status.present?
-        current_user.tasks.page(page_number).where(status:input_status)
-      elsif input_name.present? && input_status.blank?
-        current_user.tasks.page(page_number).name_like(input_name)
-      else
-        current_user.tasks.all.page(page_number).recent
-      end
+  def self.filter(current_user,input_name,input_status,input_label,page_number)
+
+    if input_label.present?
+      tasks = current_user.labels.find_by(name:input_label).tasks
+      search(tasks,input_name,input_status,page_number)
+    else
+      tasks = current_user.tasks
+      search(tasks,input_name,input_status,page_number)
+    end
+
+  end
+
+  private
+
+  def self.search(tasks,input_name,input_status,page_number)
+
+        if input_name.present? && input_status.present?
+          tasks.page(page_number).name_like(input_name).where(status:input_status)
+        elsif input_name.blank? && input_status.present?
+          tasks.page(page_number).where(status:input_status)
+        elsif input_name.present? && input_status.blank?
+          tasks.page(page_number).name_like(input_name)
+        else
+          tasks.page(page_number).recent
+        end
   end
 
 end

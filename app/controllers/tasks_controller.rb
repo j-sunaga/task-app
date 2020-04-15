@@ -5,11 +5,13 @@ class TasksController < ApplicationController
 
   def index
     if params[:search].present?
-      @tasks = Task.search(current_user,params[:name],params[:status],params[:page])
+      @tasks = Task.filter(current_user,params[:name],params[:status],params[:label],params[:page])
     elsif params[:sort_expired]
       @tasks = current_user.tasks.page(params[:page]).deadline
     elsif params[:sort_priority]
       @tasks = current_user.tasks.page(params[:page]).priority
+    elsif params[:label]
+      @tasks = current_user.labels.find_by(name:params[:label]).tasks
     else
       @tasks = current_user.tasks.page(params[:page]).recent
     end
