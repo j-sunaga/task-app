@@ -19,6 +19,7 @@
 
 #Task初期データ
 User.all.each do |user|
+
   user.tasks.create(
     name: user.name + '_task',
     detail: user.name + '_task_detail',
@@ -26,4 +27,14 @@ User.all.each do |user|
     status: Task.statuses.keys.at(rand(0..2)),
     priority: Task.priorities.keys.at(rand(0..2))
   )
+
+  user.labels.create(
+    name: user.name + '_label'
+  )
+
+  Labeling.create(
+    task_id: user.tasks.first.id,
+    label_id: user.labels.first.id
+  )
+
 end
