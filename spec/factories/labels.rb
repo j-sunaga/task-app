@@ -1,5 +1,11 @@
 FactoryBot.define do
   factory :label do
-    name { "MyString" }
+
+    sequence :name do |n|
+      "label_#{n}"
+    end
+
+    user
+
   end
 end

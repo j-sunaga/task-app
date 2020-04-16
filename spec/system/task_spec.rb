@@ -8,13 +8,9 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'タスク一覧画面' do
     context 'タスクを作成した場合' do
       it '作成済みのタスクが表示される' do
-        #タスク一覧ページに遷移
         act_as user do
           visit tasks_path
-          # visitした（遷移した）page（タスク一覧ページ）に「task」という文字列が
-          # have_contentされているか。（含まれているか。）ということをexpectする（確認・期待する）
           expect(page).to have_content "#{task.name}"
-          # expectの結果が true ならテスト成功、false なら失敗として結果が出力される
         end
       end
     end
@@ -58,9 +54,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "タイトルで検索できる" do
         act_as user do
           visit tasks_path
-          # タスクの検索欄に検索ワードを入力する (例: task)
           fill_in "name", with: "#{tasks[0].name}"
-          # 検索ボタンを押す
           click_on 'commit'
           expect(page).to have_content "#{tasks[0].name}"
           expect(page).to_not have_content "#{tasks[1].name}"
@@ -70,7 +64,6 @@ RSpec.describe 'タスク管理機能', type: :system do
         act_as user do
           visit tasks_path
           select '着手中',from: "status"
-          # 検索ボタンを押す
           click_on 'commit'
           expect(page).to have_content 'task_9'
           expect(page).to have_content 'task_10'
@@ -79,10 +72,8 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "タスク名とステータスで検索できる" do
         act_as user do
           visit tasks_path
-          # タスクの検索欄に検索ワードを入力する (例: task)
           fill_in "name", with: "12"
           select '着手中',from: "status"
-          # 検索ボタンを押す
           click_on 'commit'
           expect(page).to have_content 'task_12'
           expect(page).to_not have_content 'task_13'
@@ -116,5 +107,51 @@ RSpec.describe 'タスク管理機能', type: :system do
         end
        end
      end
+  end
+  describe 'ラベル管理機能' do
+    let!(:label){create(:label,user:user)}
+    context 'ラベルを登録した場合' do
+      it '作成済みのラベルが一覧画面に表示される' do
+        act_as user do
+          visit labels_path
+          expect(page).to have_content "#{label.name}"
+        end
+      end
+    end
+    context 'タスクにラベルを紐付けた場合' do
+      let!(:tasks){create_list(:task, 2 ,user:user)}
+      it "該当タスクが検索できる" do
+        act_as user do
+          visit tasks_path
+          select "#{tasks[0].labels.first.name}",from: "label"
+          click_on 'commit'
+          expect(page).to have_content "#{tasks[0].name}"
+          expect(page).to have_content "#{tasks[0].labels.first.name}"
+        end
+      end
+    end
+  end
+  describe 'ラベル登録画面' do
+    context '必要項目を入力して、createボタンを押した場合' do
+      it 'データが保存される' do
+        act_as user do
+          visit new_label_path
+          fill_in "label[name]", with: "Example_Label"
+          click_on 'commit'
+          expect(first('.form-control').value).to eq 'Example_Label'
+        end
+      end
+    end
+  end
+  describe 'ラベル詳細画面' do
+    let!(:label){create(:label,user:user)}
+    context '任意のラベル詳細画面に遷移した場合' do
+      it '該当ラベルの内容が表示されたページに遷移する' do
+        act_as user do
+          visit labels_path(label)
+          expect(page).to have_content "#{label.name}"
+        end
+      end
+    end
   end
 end

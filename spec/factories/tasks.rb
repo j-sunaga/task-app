@@ -23,5 +23,9 @@ FactoryBot.define do
 
     user
 
+    after :create do |task|
+      create(:labeling,task: task,label: create(:label,user:task.user))
+    end
+
   end
 end
