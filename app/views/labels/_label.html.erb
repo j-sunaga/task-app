@@ -1,0 +1,19 @@
+<tbody>
+  <% @labels.each do |label| %>
+    <tr>
+      <td class="label_row"><%= label.name %></td>
+
+      <td>
+      <% label.tasks.each do |task| %>
+        <span class="label label-default"><%= task.name %></span>
+      <% end %>
+      </td>
+
+      <td><%= label.created_at.strftime("%Y年%m月%d日 %H時%M分") %></td>
+      <td><%= link_to '詳細', label %></td>
+      <td><%= link_to '編集', edit_label_path(label) %></td>
+      <td><%= link_to '削除', label, method: :delete, data: { confirm: '本当に削除してもよろしいですか？' } %></td>
+
+    </tr>
+  <% end %>
+</tbody>
