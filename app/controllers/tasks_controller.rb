@@ -35,6 +35,9 @@ class TasksController < ApplicationController
   end
 
   def update
+    unless params[:task][:label_ids]
+      @task.labels.delete_all
+    end
     if @task.update(task_params)
       redirect_to @task, notice: 'タスクの更新が完了しました'
     else
