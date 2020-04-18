@@ -34,15 +34,16 @@ class Task < ApplicationRecord
 
   def self.search(tasks,input_name,input_status,page_number)
 
-        if input_name.present? && input_status.present?
-          tasks.page(page_number).name_like(input_name).where(status:input_status)
-        elsif input_name.blank? && input_status.present?
-          tasks.page(page_number).where(status:input_status)
-        elsif input_name.present? && input_status.blank?
-          tasks.page(page_number).name_like(input_name)
-        else
-          tasks.page(page_number).recent
-        end
+    if input_name.present? && input_status.present?
+      tasks.page(page_number).name_like(input_name).where(status:input_status)
+    elsif input_name.blank? && input_status.present?
+      tasks.page(page_number).where(status:input_status)
+    elsif input_name.present? && input_status.blank?
+      tasks.page(page_number).name_like(input_name)
+    else
+      tasks.page(page_number).recent
+    end
+
   end
 
 end
