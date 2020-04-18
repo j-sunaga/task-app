@@ -47,7 +47,7 @@ class LabelsController < ApplicationController
   end
 
   def destroy
-    @label.destroy
+    @label.destroy!
     redirect_to labels_url, notice: 'ラベルを削除しました'
   end
 
