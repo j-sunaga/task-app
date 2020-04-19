@@ -13,12 +13,12 @@
         <th colspan="3"></th>
       </tr>
     </thead>
-
-      <%= render 'label', collection: @labels %>
-
-    </table>
-
-
+    <tbody>
+      <% @labels.each do |label| %>
+        <%= render label %>
+      <% end %>
+    </tbody>
+  </table>
   <%= link_to 'ラベルの登録', new_label_path %>
 
 </div>
