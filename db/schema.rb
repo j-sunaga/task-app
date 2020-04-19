@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,49 +12,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_15_064102) do
-
+ActiveRecord::Schema.define(version: 20_200_415_064_102) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "labelings", force: :cascade do |t|
-    t.integer "task_id"
-    t.integer "label_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'labelings', force: :cascade do |t|
+    t.integer 'task_id'
+    t.integer 'label_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "labels", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id"
-    t.index ["user_id"], name: "index_labels_on_user_id"
+  create_table 'labels', force: :cascade do |t|
+    t.string 'name'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.bigint 'user_id'
+    t.index ['user_id'], name: 'index_labels_on_user_id'
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.string "name", limit: 50, default: "", null: false
-    t.string "detail", limit: 200, default: "", null: false
-    t.date "deadline", null: false
-    t.integer "status", null: false
-    t.integer "priority", null: false
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_tasks_on_name"
-    t.index ["status"], name: "index_tasks_on_status"
-    t.index ["user_id"], name: "index_tasks_on_user_id"
+  create_table 'tasks', force: :cascade do |t|
+    t.string 'name', limit: 50, default: '', null: false
+    t.string 'detail', limit: 200, default: '', null: false
+    t.date 'deadline', null: false
+    t.integer 'status', null: false
+    t.integer 'priority', null: false
+    t.bigint 'user_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['name'], name: 'index_tasks_on_name'
+    t.index ['status'], name: 'index_tasks_on_status'
+    t.index ['user_id'], name: 'index_tasks_on_user_id'
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "password_digest"
-    t.boolean "admin", default: false, null: false
+  create_table 'users', force: :cascade do |t|
+    t.string 'name'
+    t.string 'email'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.string 'password_digest'
+    t.boolean 'admin', default: false, null: false
   end
 
-  add_foreign_key "labels", "users"
-  add_foreign_key "tasks", "users"
+  add_foreign_key 'labels', 'users'
+  add_foreign_key 'tasks', 'users'
 end

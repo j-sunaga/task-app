@@ -1,17 +1,18 @@
-class TasksController < ApplicationController
+# frozen_string_literal: true
 
+class TasksController < ApplicationController
   before_action :logged_in?
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: %i[show edit update destroy]
 
   def index
     if params[:search].present?
-      @tasks = Task.filter(current_user,params[:name],params[:status],params[:label],params[:page])
+      @tasks = Task.filter(current_user, params[:name], params[:status], params[:label], params[:page])
     elsif params[:sort_expired]
       @tasks = current_user.tasks.page(params[:page]).deadline
     elsif params[:sort_priority]
       @tasks = current_user.tasks.page(params[:page]).priority
     elsif params[:label]
-      @tasks = current_user.labels.find_by(name:params[:label]).tasks
+      @tasks = current_user.labels.find_by(name: params[:label]).tasks
     else
       @tasks = current_user.tasks.page(params[:page]).recent
     end
@@ -55,11 +56,10 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :detail, :deadline, :status, :priority, :status, :user_id,label_ids: [])
+    params.require(:task).permit(:name, :detail, :deadline, :status, :priority, :status, :user_id, label_ids: [])
   end
 
   def delete_label
     @task.labels.delete_all
   end
-
 end

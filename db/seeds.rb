@@ -1,25 +1,26 @@
-#User初期データ
+# frozen_string_literal: true
+
+# User初期データ
 20.times do |n|
-    User.create(
-      email: "test_#{n + 1}@example.com",
-      name: "test_#{n + 1}",
-      password: '123456'
-    )
-  end
+  User.create(
+    email: "test_#{n + 1}@example.com",
+    name: "test_#{n + 1}",
+    password: '123456'
+  )
+end
 
-#Admin初期データ
+# Admin初期データ
 2.times do |n|
-    User.create(
-      email: "admin_#{n + 1}@example.com",
-      name: "admin_#{n + 1}",
-      password: '123456',
-      admin: true
-    )
-  end
+  User.create(
+    email: "admin_#{n + 1}@example.com",
+    name: "admin_#{n + 1}",
+    password: '123456',
+    admin: true
+  )
+end
 
-#Task初期データ
+# Task初期データ
 User.all.each do |user|
-
   user.tasks.create(
     name: user.name + '_task',
     detail: user.name + '_task_detail',
@@ -36,5 +37,4 @@ User.all.each do |user|
     task_id: user.tasks.first.id,
     label_id: user.labels.first.id
   )
-
 end
