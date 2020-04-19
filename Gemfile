@@ -25,6 +25,9 @@ gem 'enum_help'
 #pagenation
 gem 'kaminari', '~> 0.17.0'
 
+gem 'rubocop', require:false
+gem 'rubocop-rails', require:false
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 3.8'
