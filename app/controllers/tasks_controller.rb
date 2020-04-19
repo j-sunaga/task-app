@@ -60,6 +60,6 @@ class TasksController < ApplicationController
   end
 
   def delete_label
-    @task.labels.delete_all
+    @task.labels.destroy_all
   end
 end
