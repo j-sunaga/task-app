@@ -19,7 +19,7 @@ class Task < ApplicationRecord
   scope :recent, -> { order(created_at: :desc) }
 
   def self.filter(current_user, input_name, input_status, input_label, page_number)
-    input_label.present? ? tasks = current_user.labels.find_by(name: input_label).tasks : tasks = current_user.tasks
+    tasks = input_label.present? ? current_user.labels.find_by(name: input_label).tasks : current_user.tasks
     search(tasks, input_name, input_status, page_number)
   end
 
