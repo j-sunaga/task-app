@@ -61,4 +61,8 @@ class LabelsController < ApplicationController
   def label_params
     params.require(:label).permit(:name, :user_id, task_ids: [])
   end
+
+  def destroy_all_tasks
+    @label.tasks.destroy_all
+  end
 end
