@@ -3,6 +3,7 @@ ja:
     models:
       task: タスク
       user: ユーザー
+      label: ラベル
     attributes:
       task:
         name: タスク名
@@ -13,3 +14,5 @@ ja:
       user:
         name: ユーザ名
         email: メールアドレス
+      label:
+        name: ラベル名
