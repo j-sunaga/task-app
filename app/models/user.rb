@@ -25,7 +25,7 @@ class User < ApplicationRecord
 
   def stop_admin_destroy
     if User.where(admin: true).count == 1
-      throw(:abort) if admin == true
+      throw(:abort) if admin.present?
     end
   end
 
