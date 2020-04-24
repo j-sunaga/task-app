@@ -14,9 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @labels.each do |label| %>
-        <%= render label %>
-      <% end %>
+      <%= render @labels %>
     </tbody>
   </table>
   <%= link_to 'ラベルの登録', new_label_path %>
