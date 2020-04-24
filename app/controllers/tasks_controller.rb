@@ -36,7 +36,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    delete_label if params[:task][:label_ids].blank?
+    destroy_all_labels if params[:task][:label_ids].blank?
     if @task.update(task_params)
       redirect_to @task, notice: 'タスクの更新が完了しました'
     else
@@ -59,7 +59,7 @@ class TasksController < ApplicationController
     params.require(:task).permit(:name, :detail, :deadline, :status, :priority, :status, :user_id, label_ids: [])
   end
 
-  def delete_label
+  def destroy_all_labels
     @task.labels.destroy_all
   end
 end
