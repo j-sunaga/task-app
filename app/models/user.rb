@@ -31,7 +31,9 @@ class User < ApplicationRecord
 
   def stop_admin_update
     if User.where(admin: true).count == 1
-      throw(:abort) if admin == true
+      if User.where(admin: true).ids.include?(self.id)
+        throw(:abort)
+      end
     end
   end
 end
