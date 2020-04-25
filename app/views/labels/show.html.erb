@@ -1,0 +1,27 @@
+<h4>ラベル詳細</h4>
+
+<div class="row">
+  <div class="form-group col-md-6">
+    <label>ラベル名</label>
+      <input type="text" readonly class="form-control show-form" value="<%=@label.name%>">
+  </div>
+</div>
+
+<div class="row">
+  <div class="form-group col-md-6">
+    <label>タスク</label>
+    <div>
+      <% @label.tasks.each do |task| %>
+        <label class='badge badge-secondary'><%= task.name %></label>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="form-group col-md-6">
+    <%= link_to '編集', edit_label_path(@label) %>
+    <%= link_to '戻る', labels_path %>
+  </div>
+</div>
