@@ -25,7 +25,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'enum_help'
 
 # pagenation
-gem 'kaminari', '~> 0.17.0'
+gem 'kaminari', '~> 1.2.1'
 
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
